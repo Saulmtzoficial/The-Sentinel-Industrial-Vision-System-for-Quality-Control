@@ -1,0 +1,14 @@
+[Unit]
+Description=Vision - Sistema de Inspección
+After=network.target NetworkManager.service
+
+[Service]
+Type=simple
+User=saulmartinezalm
+WorkingDirectory=/home/saulmartinezalm/vision
+ExecStart=/bin/bash /home/saulmartinezalm/vision/iniciar_vision.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

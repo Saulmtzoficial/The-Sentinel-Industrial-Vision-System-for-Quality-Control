@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vision — Tuercas y Tornillos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="top-bar">
+      <div class="top-bar-left">
+        <span class="logo-dot"></span>
+        <span class="logo-text">VISION</span>
+        <span class="badge-estado" id="badge-estado">
+          <span class="estado-dot" id="estado-dot"></span>
+          <span id="texto-estado">Detenido</span>
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-meta"><span id="fps-navbar">0</span> FPS</span>
+        <span class="top-meta"><span id="reloj"></span></span>
+        <span class="top-meta user-badge"><i class="fas fa-user"></i> {{ usuario }}</span>
+        <a href="{{ url_for('logout') }}" class="btn-logout">Salir</a>
+      </div>
+    </nav>
+
+    <main class="dashboard">
+      <!-- LEFT COLUMN -->
+      <section class="col-main">
+
+        <!-- Video -->
+        <div class="panel video-panel">
+          <div class="video-wrap">
+            <img id="video-stream" src="/video_feed" alt="Feed de video" />
+            <div class="video-badge" id="cam-status">
+              <span class="live-dot"></span> LIVE
+            </div>
+          </div>
+          <!-- Controls inline below video -->
+          <div class="control-row">
+            <button class="ctrl-btn ctrl-start" id="btn-iniciar">
+              <i class="fas fa-play"></i> Iniciar
+            </button>
+            <button class="ctrl-btn ctrl-stop" id="btn-detener">
+              <i class="fas fa-stop"></i> Detener
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="stats-row">
+          <div class="stat-tile">
+            <span class="stat-value" id="contador-inspeccionadas">0</span>
+            <span class="stat-label">Inspeccionadas</span>
+          </div>
+          <div class="stat-tile stat-ok">
+            <span class="stat-value" id="contador-aceptadas">0</span>
+            <span class="stat-label">Aceptadas</span>
+          </div>
+          <div class="stat-tile stat-nok">
+            <span class="stat-value" id="contador-rechazadas">0</span>
+            <span class="stat-label">Rechazadas</span>
+          </div>
+          <div class="stat-tile stat-quality">
+            <span class="stat-value" id="calidad-actual">100%</span>
+            <span class="stat-label">Calidad</span>
+          </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-row">
+          <div class="panel chart-panel">
+            <div class="panel-head">Calidad en tiempo real</div>
+            <div class="chart-wrap"><canvas id="grafico-calidad-tiempo-real" height="70"></canvas></div>
+          </div>
+          <div class="panel chart-panel">
+            <div class="panel-head">Tendencia por hora</div>
+            <div class="chart-wrap"><canvas id="grafico-horario" height="70"></canvas></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="col-side">
+
+        <!-- Piece detail -->
+        <div class="panel">
+          <div class="panel-head">Detalle por pieza</div>
+          <div class="piece-grid">
+            <div class="piece-card piece-tuerca">
+              <span class="piece-icon"><i class="fas fa-circle-notch"></i></span>
+              <span class="piece-name">Tuercas</span>
+              <div class="piece-counts">
+                <span class="piece-ok">OK <strong id="tuercas-ok">0</strong></span>
+                <span class="piece-nok">NOK <strong id="tuercas-nok">0</strong></span>
+              </div>
+            </div>
+            <div class="piece-card piece-tornillo">
+              <span class="piece-icon"><i class="fas fa-bolt"></i></span>
+              <span class="piece-name">Tornillos</span>
+              <div class="piece-counts">
+                <span class="piece-ok">OK <strong id="tornillos-ok">0</strong></span>
+                <span class="piece-nok">NOK <strong id="tornillos-nok">0</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="panel">
+          <div class="panel-head">Acciones</div>
+          <div class="actions-col">
+            <button class="action-btn" id="btn-resetear-contadores">
+              <i class="fas fa-redo"></i> Resetear contadores
+            </button>
+            <a href="/api/exportar" class="action-btn action-export">
+              <i class="fas fa-file-excel"></i> Exportar a Excel
+            </a>
+          </div>
+        </div>
+
+        <!-- Alarms -->
+        <div class="panel">
+          <div class="panel-head">
+            Alarmas
+            <span class="alarm-count" id="contador-alarmas">0</span>
+          </div>
+          <div class="alarmas-container" id="alarmas-container">
+            <div class="empty-state">
+              <i class="fas fa-check-circle"></i> Sin alarmas
+            </div>
+          </div>
+        </div>
+
+        <!-- Events -->
+        <div class="panel">
+          <div class="panel-head">Eventos</div>
+          <div class="eventos-container" id="eventos-container"></div>
+        </div>
+      </aside>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: #0b0d11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.login-bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(59,130,246,0.05) 0%, transparent 60%),
+    #0b0d11;
+  z-index: 0;
+}
+
+.gear-deco { display: none; }
+
+.login-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 20px;
+  animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.login-card {
+  background: #12151c;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.login-header {
+  padding: 40px 36px 28px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.login-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 20px;
+  color: #3b82f6;
+}
+
+.fa-spin-slow { animation: spin 10s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.login-header h1 {
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e4e6eb;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.login-header p {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  color: #555962;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.login-body { padding: 32px 36px; }
+
+.input-group-custom {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0;
+  color: #555962;
+  font-size: 13px;
+  width: 20px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+  transition: color 0.3s;
+}
+
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 36px 12px 28px;
+  color: #e4e6eb;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-input::placeholder {
+  color: rgba(255,255,255,0.18);
+  font-weight: 400;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.form-input:focus {
+  border-bottom-color: rgba(59,130,246,0.4);
+}
+
+.input-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: #3b82f6;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.input-group-custom:focus-within .input-line { width: 100%; }
+.input-group-custom:focus-within .input-icon { color: #3b82f6; }
+
+.toggle-pass {
+  position: absolute;
+  right: 0;
+  background: none;
+  border: none;
+  color: #555962;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 13px;
+  transition: color 0.3s;
+}
+.toggle-pass:hover { color: #3b82f6; }
+
+.btn-login {
+  width: 100%;
+  padding: 13px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.2s;
+}
+.btn-login:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(59,130,246,0.25);
+}
+.btn-login:active:not(:disabled) { transform: translateY(0); }
+.btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.alert {
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+  padding: 10px 14px;
+}
+
+.alert-danger {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: #f87171;
+}
+
+.login-footer {
+  padding: 14px 36px;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+.login-footer p {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+}
